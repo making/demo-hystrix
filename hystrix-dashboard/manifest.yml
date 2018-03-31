@@ -1,0 +1,5 @@
+applications:
+- name: payment-dashboard
+  memory: 1g
+  path: target/hystrix-dashboard-0.0.1-SNAPSHOT.jar
+  # cf add-network-policy payment-dashboard --destination-app payment-gateway --protocol tcp --port 8080
