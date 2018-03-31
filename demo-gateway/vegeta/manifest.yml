@@ -1,0 +1,11 @@
+applications:
+- name: vegeta
+  buildpack: binary_buildpack
+  memory: 64m
+  no-route: true
+  health-check-type: process
+  command: sleep infinity
+  # cf run-task vegeta "./perf-service-a.sh"
+  # cf run-task vegeta "./perf-service-b.sh"
+  # cf run-task vegeta "./perf-service-c.sh"
+  # cf run-task vegeta "echo POST https://payment-gateway.cfapps.io/payment/c | ./vegeta attack -duration=10s -rate=10 -timeout=180s | tee results.bin | ./vegeta report -reporter=text"

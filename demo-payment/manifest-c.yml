@@ -1,0 +1,8 @@
+applications:
+- name: payment-c
+  memory: 1g
+  path: target/demo-payment-0.0.1-SNAPSHOT.jar
+  env:
+    DEMO_MAX_IN_FLIGHT: 200
+    DEMO_SLEEP: 200ms
+    DEMO_TIMEOUT: 1s
