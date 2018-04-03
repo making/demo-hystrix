@@ -44,7 +44,7 @@ public class DemoGatewayApplication {
 							HttpStatus statusCode) throws IOException {
 						String body = StreamUtils.copyToString(response.getBody(),
 								StandardCharsets.UTF_8);
-						log.info("{}", body);
+						log.warn("{}", body);
 						throw new ResponseStatusException(statusCode, body);
 					}
 				});

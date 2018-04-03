@@ -30,8 +30,6 @@ public class PaymentServiceB {
 					@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "5000"),//
 			})
 	public String payment() {
-		String res = this.restTemplate.postForObject("/payment", null, String.class);
-		log.info("{}", res);
-		return res;
+		return this.restTemplate.postForObject("/payment", null, String.class);
 	}
 }
