@@ -31,13 +31,13 @@ public class PaymentController {
 					TimeUnit.MILLISECONDS);
 			Thread.sleep(this.props.getSleep().toMillis());
 			if (!success) {
-				log.info("BUSY");
+				log.warn("BUSY");
 				return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body("BUSY");
 			}
 		}
 		catch (InterruptedException e) {
 			Thread.currentThread().interrupt();
-			log.info("CANCELED");
+			log.warn("CANCELED");
 			return ResponseEntity.status(HttpStatus.GONE).body("CANCELED");
 		}
 		finally {
@@ -45,7 +45,6 @@ public class PaymentController {
 				this.queue.poll();
 			}
 		}
-		log.info("OK");
 		return ResponseEntity.ok("OK");
 	}
 }
