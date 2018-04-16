@@ -1,15 +1,13 @@
 package com.example.hystrixdashboard;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.xbill.DNS.Lookup;
-import org.xbill.DNS.Record;
-import org.xbill.DNS.TextParseException;
-import org.xbill.DNS.Type;
 
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
@@ -28,19 +26,18 @@ public class CloudFoundryAppServiceDiscoveryClient implements DiscoveryClient {
 	public List<ServiceInstance> getInstances(String serviceId) {
 		String hostname = serviceId + ".apps.internal";
 		try {
-			Lookup lookup = new Lookup(hostname, Type.A);
 			List<ServiceInstance> serviceInstances = new ArrayList<>();
-			Record[] records = lookup.run();
-			if (records != null) {
-				for (Record record : records) {
+			InetAddress[] addresses = InetAddress.getAllByName(hostname);
+			if (addresses != null) {
+				for (InetAddress address : addresses) {
 					DefaultServiceInstance serviceInstance = new DefaultServiceInstance(
-							serviceId, record.rdataToString(), 8080, false);
+							serviceId, address.getHostAddress(), 8080, false);
 					serviceInstances.add(serviceInstance);
 				}
 			}
 			return serviceInstances;
 		}
-		catch (TextParseException e) {
+		catch (UnknownHostException e) {
 			log.warn("{}", e.getMessage());
 			return Collections.emptyList();
 		}
